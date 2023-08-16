@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
+import '../components/nav_bottom.dart';
 import '../widgets/custom_icon_button.dart';
 import '../widgets/location_card.dart';
 import '../widgets/nearby_places.dart';
@@ -78,29 +79,7 @@ class HomePage extends StatelessWidget {
           const NearbyPlaces(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Ionicons.home_outline),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Ionicons.bookmark_outline),
-            label: "Bookmark",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Ionicons.ticket_outline),
-            label: "Ticket",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Ionicons.person_outline),
-            label: "Profile",
-          )
-        ],
-      ),
+      bottomNavigationBar: const bottomNavigationBar(),
     );
   }
 }
