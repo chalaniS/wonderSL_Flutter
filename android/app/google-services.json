@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "100508084164",
+    "firebase_url": "https://wondersl-fbea3-default-rtdb.firebaseio.com",
+    "project_id": "wondersl-fbea3",
+    "storage_bucket": "wondersl-fbea3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:100508084164:android:70f938120064476e3ae691",
+        "android_client_info": {
+          "package_name": "com.example.wondersl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "100508084164-4oieud8ej42qh8jnaqsaacnnf5551jbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2y8QEwF-zDRUC6AtQ_Zjd4WCMH0wfDoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "100508084164-4oieud8ej42qh8jnaqsaacnnf5551jbk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

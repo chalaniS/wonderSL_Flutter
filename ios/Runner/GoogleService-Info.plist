@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>100508084164-9jhbntk98r84nc2mis7abk8j9qb2p2gu.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.100508084164-9jhbntk98r84nc2mis7abk8j9qb2p2gu</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBuAKRwrdthlq5LR9EaO_mTWw75dHF3Dds</string>
+	<key>GCM_SENDER_ID</key>
+	<string>100508084164</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.wondersl</string>
+	<key>PROJECT_ID</key>
+	<string>wondersl-fbea3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wondersl-fbea3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:100508084164:ios:c7aafc70adad8ed73ae691</string>
+	<key>DATABASE_URL</key>
+	<string>https://wondersl-fbea3-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
