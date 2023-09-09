@@ -36,7 +36,7 @@ dependencies:
   ionicons: ^0.2.1
   firebase_core: ^2.15.1
   google_maps_flutter: ^2.1.7
-  location: ^4.4.0
+  location: ^5.0.3
   flutter_svg: ^1.1.0
   flutter_polyline_points: ^2.0.0
 
