@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'pages/welcome_page.dart.dart';
+// import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:wondersl/pages/welcome_page.dart.dart';
+import 'firebase_options.dart'; // Import Firebase Core
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // Ensure that Flutter is initialized
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print('Firebase initialization error: $e'); // Print the error message
+  }
+
   runApp(const MyApp());
 }
 
@@ -27,9 +39,9 @@ class MyApp extends StatelessWidget {
           800: Color(0xFF00637E),
           900: Color(0xFF004C65),
         }),
-        textTheme: GoogleFonts.mulishTextTheme(
-          Theme.of(context).textTheme,
-        ),
+        // textTheme: GoogleFonts.mulishTextTheme(
+        //   Theme.of(context).textTheme,
+        // ),
       ),
       home: const WelcomePage(),
     );

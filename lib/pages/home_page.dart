@@ -9,6 +9,7 @@ import '../widgets/location_card.dart';
 import '../widgets/nearby_places.dart';
 import '../widgets/recommended_places.dart';
 import '../widgets/tourist_places.dart';
+import 'location_search_screen.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

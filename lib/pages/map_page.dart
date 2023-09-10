@@ -17,8 +17,10 @@ class TravelMap extends StatefulWidget {
 class _TravelMapState extends State<TravelMap> {
   final Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng sourceLocation = LatLng(37.4227, -122.085);
-  static const LatLng destination = LatLng(37.411, -122.072);
+  static const LatLng sourceLocation =
+      LatLng(6.931970843682031, 79.84310638367307);
+  static const LatLng destination =
+      LatLng(7.293736697003451, 80.64131426545106);
 
   List<LatLng> polylinecoordinates = [];
   LocationData? currentLocation;
@@ -114,7 +116,7 @@ class _TravelMapState extends State<TravelMap> {
         ),
       ),
       body: currentLocation == null
-          ? Center(child: Text("Loading..."))
+          ? const Center(child: Text("Loading..."))
           : GoogleMap(
               initialCameraPosition: CameraPosition(
                 target: LatLng(

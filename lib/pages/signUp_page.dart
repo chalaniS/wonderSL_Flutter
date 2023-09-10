@@ -1,7 +1,7 @@
-//
-
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:wondersl/pages/home_page.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -16,16 +16,19 @@ class _SignUpState extends State<SignUp> {
   late String _firstName;
   late String _lastName;
   late String _email;
+  late String _nic;
   late String _password;
   late String _reEnterPassword;
 
-  // Create a Firebase Auth instance
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference();
 
   Widget _buildTextField({
     required String hintText,
     required bool obscureText,
     required TextEditingController controller,
+    required String label,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 1.0),
@@ -66,6 +69,25 @@ class _SignUpState extends State<SignUp> {
         ),
         obscureText: obscureText,
         controller: controller,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please enter $label';
+          }
+          return null;
+        },
+        onSaved: (value) {
+          if (label == 'First Name') {
+            _firstName = value!;
+          } else if (label == 'Last Name') {
+            _lastName = value!;
+          } else if (label == 'E-mail') {
+            _email = value!;
+          } else if (label == 'NIC') {
+            _nic = value!;
+          } else if (label == 'Password') {
+            _password = value!;
+          }
+        },
       ),
     );
   }
@@ -76,7 +98,7 @@ class _SignUpState extends State<SignUp> {
       children: [
         ElevatedButton(
           onPressed: () {
-            _signUp(); // Call the signup function
+            _signUp();
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.only(
@@ -103,6 +125,11 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> _signUp() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    _formKey.currentState!.save();
+
     try {
       final UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
@@ -110,16 +137,36 @@ class _SignUpState extends State<SignUp> {
         password: _password,
       );
 
-      // Sign up successful, you can perform actions here
-      print('User signed up: ${userCredential.user?.email}');
+      final userUid = userCredential.user?.uid;
 
-      // After signing up, you can navigate to another screen if needed
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => const MyLogin()),
-      // );
+      await databaseReference.child('users').child(userUid!).set({
+        'firstName': _firstName,
+        'lastName': _lastName,
+        'email': _email,
+        'nic': _nic, // Add NIC to the database
+      });
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Success'),
+            content: const Text('You have successfully signed up.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     } catch (e) {
-      // Handle sign-up errors (e.g., email already exists, weak password, etc.)
       String errorMessage = 'Sign Up Error';
       if (e is FirebaseAuthException) {
         switch (e.code) {
@@ -138,7 +185,6 @@ class _SignUpState extends State<SignUp> {
         }
       }
 
-      // Show an error message to the user
       showDialog(
         context: context,
         builder: (context) {
@@ -189,19 +235,16 @@ class _SignUpState extends State<SignUp> {
                   hintText: label,
                   obscureText: label.contains('Password'),
                   controller: TextEditingController(),
+                  label: label,
                 ),
               const SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'By clicking ‘sign up’ I agree that I have read and accepted the',
-                    style: TextStyle(color: Colors.black),
-                  ),
                   TextButton(
                     onPressed: () {},
                     child: const Text(
-                      'Terms of Use',
+                      'Terms of Conditions',
                       style: TextStyle(
                         color: Colors.black,
                       ),
