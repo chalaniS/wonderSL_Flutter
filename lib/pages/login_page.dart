@@ -3,6 +3,7 @@ import 'package:wondersl/pages/home_page.dart';
 import 'package:wondersl/pages/signUp_page.dart';
 import '../constants.dart';
 import 'resetPW_page.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class _MyLoginState extends State<MyLogin> {
   late String _username;
   final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Widget _buildTextField({
     required String hintText,
@@ -63,6 +65,63 @@ class _MyLoginState extends State<MyLogin> {
       validator: validator,
       onSaved: onSaved,
     );
+  }
+
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState?.save();
+
+      try {
+        final UserCredential userCredential =
+            await _auth.signInWithEmailAndPassword(
+          email: _username,
+          password: _password,
+        );
+
+        // Authentication successful, you can perform actions here
+        print('User logged in: ${userCredential.user?.email}');
+
+        // Navigate to the home page after successful login
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } catch (e) {
+        // Handle login errors (e.g., invalid credentials)
+        String errorMessage = 'Login Error';
+        if (e is FirebaseAuthException) {
+          if (e.code == 'user-not-found') {
+            errorMessage = 'User not found. Please sign up.';
+          } else if (e.code == 'wrong-password') {
+            errorMessage = 'Invalid password. Please try again.';
+          } else if (e.code == 'invalid-email') {
+            errorMessage = 'Invalid email address.';
+          } else {
+            errorMessage = 'An error occurred while logging in.';
+          }
+        }
+
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Login Error'),
+              content: Text(errorMessage),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+
+        print('Login Error: $errorMessage');
+      }
+    }
   }
 
   @override
@@ -113,7 +172,9 @@ class _MyLoginState extends State<MyLogin> {
                   },
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    // Add your validation logic here
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email address';
+                    }
                     return null;
                   },
                   onSaved: (text) {
@@ -133,7 +194,9 @@ class _MyLoginState extends State<MyLogin> {
                     });
                   },
                   validator: (value) {
-                    // Add your validation logic here
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
                     return null;
                   },
                   onSaved: (text) {
@@ -166,15 +229,7 @@ class _MyLoginState extends State<MyLogin> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1,
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState?.save();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
-                      }
-                    },
+                    onPressed: _login, // Call the login function
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(

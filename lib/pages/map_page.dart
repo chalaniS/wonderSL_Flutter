@@ -56,7 +56,7 @@ class _TravelMapState extends State<TravelMap> {
     });
   }
 
-  void getPolyPoints() async {
+  Future<void> getPolyPoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
@@ -76,22 +76,25 @@ class _TravelMapState extends State<TravelMap> {
 
   void setCustomMarkerIcon() {
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/Pin_source.png")
-        .then(
+      ImageConfiguration.empty,
+      "assets/Pin_source.png",
+    ).then(
       (icon) {
         sourceIcon = icon;
       },
     );
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/Pin_destination.png")
-        .then(
+      ImageConfiguration.empty,
+      "assets/Pin_destination.png",
+    ).then(
       (icon) {
         destinationIcon = icon;
       },
     );
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration.empty, "assets/Badge.png")
-        .then(
+      ImageConfiguration.empty,
+      "assets/Badge.png",
+    ).then(
       (icon) {
         currentLocationIcon = icon;
       },
@@ -100,10 +103,9 @@ class _TravelMapState extends State<TravelMap> {
 
   @override
   void initState() {
+    super.initState();
     getCurrentLocation();
     setCustomMarkerIcon();
-    getPolyPoints();
-    super.initState();
   }
 
   @override
@@ -121,7 +123,7 @@ class _TravelMapState extends State<TravelMap> {
               initialCameraPosition: CameraPosition(
                 target: LatLng(
                     currentLocation!.latitude!, currentLocation!.longitude!),
-                zoom: 15.5,
+                zoom: 10.0, // Start with a lower zoom level
               ),
               polylines: {
                 Polyline(
@@ -151,6 +153,7 @@ class _TravelMapState extends State<TravelMap> {
               },
               onMapCreated: (mapController) {
                 _controller.complete(mapController);
+                getPolyPoints(); // Load polylines here
               },
             ),
     );
