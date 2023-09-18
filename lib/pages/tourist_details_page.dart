@@ -80,7 +80,7 @@ class TouristDetailsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Sea of Peace",
+                      "Kandy",
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 5),
@@ -133,6 +133,16 @@ class TouristDetailsPage extends StatelessWidget {
                     Text(
                       "Started in",
                       style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Container(
+                      width: 380,
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width,
+                      ),
+                      child: Text(
+                        "The largest city in Sri Lanka's central region is Kandy. It's situated on a plateau surrounded by mountains that are home to biodiverse rainforest and tea plantations. The picturesque Kandy Lake (Bogambara Lake), which is where the city's core lies, is a great place to wander. Famous for its important Buddhist sites, Kandy is home to the Temple of the Tooth (Sri Dalada Maligawa) shrine, which is commemorated with the opulent Esala Perahera annual procession.",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                     )
                   ],
                 ),
@@ -154,6 +164,25 @@ class TouristDetailsPage extends StatelessWidget {
             const SizedBox(height: 15),
             const Distance(),
             const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Handle weather-related functionality here
+                // You can navigate to a weather page or perform any other actions
+                print("Weather button pressed");
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                shape: const StadiumBorder(),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 8.0,
+                ),
+              ),
+              child: const Text("Weather"),
+            ),
+
+            SizedBox(height: 20), // Add a gap of 20 logical pixels
+
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(

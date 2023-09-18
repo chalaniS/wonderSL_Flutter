@@ -12,28 +12,28 @@ class RecommendedPlaceModel {
 
 List<RecommendedPlaceModel> recommendedPlaces = [
   RecommendedPlaceModel(
-    image: "assets/places/place5.jpg",
+    image: "assets/places/kandy-1.jpg",
     rating: 4.4,
-    location: "St. Regis Bora Bora",
-  ),
-    RecommendedPlaceModel(
-    image: "assets/places/place4.jpg",
-    rating: 4.4,
-    location: "St. Regis Bora Bora",
+    location: "kandy Tooth Relic, Kandy",
   ),
   RecommendedPlaceModel(
-    image: "assets/places/place3.jpg",
+    image: "assets/places/Anuradhapura-1.jpg",
     rating: 4.4,
-    location: "St. Regis Bora Bora",
+    location: "Ruwanweli seya, Anuradhapura",
   ),
   RecommendedPlaceModel(
-    image: "assets/places/place2.jpg",
+    image: "assets/places/Galle-1.jpg",
     rating: 4.4,
-    location: "St. Regis Bora Bora",
+    location: "Galle Fort",
   ),
   RecommendedPlaceModel(
-    image: "assets/places/place1.jpg",
+    image: "assets/places/nuwaraeliya.jpg",
     rating: 4.4,
-    location: "St. Regis Bora Bora",
+    location: "Nuwara Eliya",
+  ),
+  RecommendedPlaceModel(
+    image: "assets/places/Polonnaruwa.jpg",
+    rating: 4.4,
+    location: "Polonnaruwa",
   ),
 ];

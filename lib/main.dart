@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wondersl/pages/add_places.dart';
+import 'package:wondersl/pages/edit_places.dart';
+import 'package:wondersl/pages/weather_forecast.dart';
+import 'package:wondersl/pages/weather_model.dart';
+import 'package:wondersl/pages/weather.dart';
 import 'pages/welcome_page.dart.dart';
+import 'package:wondersl/main.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +37,10 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const WelcomePage(),
+      //home: const WelcomePage(),
+      //home: const AddPlacesPage(),
+      //home: const EditPlacePage(initialPlaceName: initialPlaceName, initialLocation: initialLocation, initialDescription: initialDescription, initialAdventure: initialAdventure, initialImagePath: initialImagePath),
+      //home: const MainWeatherScreen(), // weather UI
     );
   }
 }
