@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Authentication
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -8,6 +8,8 @@ import 'package:location/location.dart';
 import 'package:wondersl/pages/User/profile_page.dart';
 import 'package:wondersl/pages/home_page.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../constants.dart';
 
@@ -32,6 +34,12 @@ class _TravelMapState extends State<TravelMap> {
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
+
+  bool distanceInserted =
+      false; // Flag to track if distance is already inserted
+
+  final FirebaseAuth _auth =
+      FirebaseAuth.instance; // Initialize Firebase Authentication
 
   Future<void> getCurrentLocation() async {
     Location location = Location();
@@ -91,6 +99,34 @@ class _TravelMapState extends State<TravelMap> {
     }
 
     return distance;
+  }
+
+  Future<void> insertDistanceToFirebase(double distance, User? user) async {
+    try {
+      // Get a reference to the Firestore instance
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+      if (user != null) {
+        // Assuming you have a collection named "Location" in Firestore
+        final CollectionReference placesCollection =
+            firestore.collection('Location');
+
+        // Create a document with a unique ID (Firestore will auto-generate one)
+        final DocumentReference documentReference = await placesCollection.add({
+          'userId': user.uid, // Use user.uid to get the user's ID
+          'total_distance': distance,
+          'timestamp': FieldValue.serverTimestamp(), // You can add a timestamp
+        });
+
+        print(
+            'Total Distance added to "Location" with ID: ${documentReference.id}');
+      } else {
+        // Handle the case where there is no signed-in user
+        print('No signed-in user');
+      }
+    } catch (e) {
+      print('Error adding total distance to "Location": $e');
+    }
   }
 
   @override
@@ -188,6 +224,13 @@ class _TravelMapState extends State<TravelMap> {
                       return Text("Distance: Error");
                     } else {
                       final distance = snapshot.data ?? 0.0;
+                      if (!distanceInserted) {
+                        insertDistanceToFirebase(
+                            distance,
+                            _auth
+                                .currentUser); // Insert the distance into Firebase only once
+                        distanceInserted = true; // Set the flag to true
+                      }
                       return Text(
                         "Total Distance: ${distance.toStringAsFixed(2)} km",
                         style: const TextStyle(
