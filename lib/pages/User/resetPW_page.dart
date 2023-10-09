@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wondersl/pages/login_page.dart';
+import 'package:wondersl/pages/User/login_page.dart';
 import '../constants.dart';
 
 class ResetPassword extends StatefulWidget {
