@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:location/location.dart';
+import 'package:wondersl/pages/User/profile_page.dart';
+import 'package:wondersl/pages/home_page.dart';
 
 import '../constants.dart';
 
@@ -156,6 +159,57 @@ class _TravelMapState extends State<TravelMap> {
                 getPolyPoints(); // Load polylines here
               },
             ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.home_outline),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.location_outline),
+            label: "Map",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.bookmark_outline),
+            label: "Bookmark",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.chatbubble_ellipses_outline),
+            label: "Messenger",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Ionicons.person_outline),
+            label: "Profile",
+          ),
+        ],
+        onTap: (int index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TravelMap(),
+              ),
+            );
+          } else if (index == 4) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Profile(),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

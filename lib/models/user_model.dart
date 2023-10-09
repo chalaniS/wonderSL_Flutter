@@ -9,5 +9,6 @@ class UserData {
     required this.lastName,
     required this.email,
     required this.nic,
+    required String emailAddress,
   });
 }

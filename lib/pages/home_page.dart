@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:wondersl/pages/map_page.dart';
-import 'package:wondersl/pages/profile_page.dart';
+import 'package:wondersl/pages/User/profile_page.dart';
 
 import '../components/nav_bottom.dart';
 import '../widgets/custom_icon_button.dart';
@@ -122,7 +122,7 @@ class HomePage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const UserProfile(),
+                  builder: (context) => Profile(),
                 ),
               );
             }

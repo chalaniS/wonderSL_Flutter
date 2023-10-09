@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wondersl/pages/home_page.dart';
-import 'package:wondersl/pages/signUp_page.dart';
-import '../constants.dart';
+import 'package:wondersl/pages/User/signUp_page.dart';
+import '../../constants.dart';
 import 'resetPW_page.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 
