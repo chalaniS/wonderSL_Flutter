@@ -7,6 +7,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:location/location.dart';
 import 'package:wondersl/pages/User/profile_page.dart';
 import 'package:wondersl/pages/home_page.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../constants.dart';
 
@@ -77,6 +78,28 @@ class _TravelMapState extends State<TravelMap> {
     }
   }
 
+  Future<double> calculateDistance() async {
+    double distance = 0;
+
+    if (currentLocation != null) {
+      distance = await Geolocator.distanceBetween(
+        currentLocation!.latitude!,
+        currentLocation!.longitude!,
+        destination.latitude,
+        destination.longitude,
+      );
+    }
+
+    return distance;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+    setCustomMarkerIcon();
+  }
+
   void setCustomMarkerIcon() {
     BitmapDescriptor.fromAssetImage(
       ImageConfiguration.empty,
@@ -105,13 +128,6 @@ class _TravelMapState extends State<TravelMap> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    getCurrentLocation();
-    setCustomMarkerIcon();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -122,42 +138,66 @@ class _TravelMapState extends State<TravelMap> {
       ),
       body: currentLocation == null
           ? const Center(child: Text("Loading..."))
-          : GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
-                    currentLocation!.latitude!, currentLocation!.longitude!),
-                zoom: 10.0, // Start with a lower zoom level
-              ),
-              polylines: {
-                Polyline(
-                  polylineId: PolylineId("route"),
-                  points: polylinecoordinates,
-                  color: primaryColor,
-                  width: 6,
+          : Column(
+              children: [
+                Expanded(
+                  child: GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(currentLocation!.latitude!,
+                          currentLocation!.longitude!),
+                      zoom: 10.0, // Start with a lower zoom level
+                    ),
+                    polylines: {
+                      Polyline(
+                        polylineId: PolylineId("route"),
+                        points: polylinecoordinates,
+                        color: primaryColor,
+                        width: 6,
+                      ),
+                    },
+                    markers: {
+                      Marker(
+                        markerId: const MarkerId("currentLocation"),
+                        icon: currentLocationIcon,
+                        position: LatLng(currentLocation!.latitude!,
+                            currentLocation!.longitude!),
+                      ),
+                      Marker(
+                        markerId: MarkerId("source"),
+                        icon: sourceIcon,
+                        position: sourceLocation,
+                      ),
+                      Marker(
+                        markerId: MarkerId("destination"),
+                        icon: destinationIcon,
+                        position: destination,
+                      ),
+                    },
+                    onMapCreated: (mapController) {
+                      _controller.complete(mapController);
+                      getPolyPoints(); // Load polylines here
+                    },
+                  ),
                 ),
-              },
-              markers: {
-                Marker(
-                  markerId: const MarkerId("currentLocation"),
-                  icon: currentLocationIcon,
-                  position: LatLng(
-                      currentLocation!.latitude!, currentLocation!.longitude!),
+                FutureBuilder<double>(
+                  future: calculateDistance(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text("Distance: Error");
+                    } else {
+                      final distance = snapshot.data ?? 0.0;
+                      return Text(
+                        "Total Distance: ${distance.toStringAsFixed(2)} km",
+                        style: const TextStyle(
+                          fontSize: 30,
+                        ),
+                      );
+                    }
+                  },
                 ),
-                Marker(
-                  markerId: MarkerId("source"),
-                  icon: sourceIcon,
-                  position: sourceLocation,
-                ),
-                Marker(
-                  markerId: MarkerId("destination"),
-                  icon: destinationIcon,
-                  position: destination,
-                ),
-              },
-              onMapCreated: (mapController) {
-                _controller.complete(mapController);
-                getPolyPoints(); // Load polylines here
-              },
+              ],
             ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
