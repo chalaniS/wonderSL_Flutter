@@ -1,4 +1,11 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart'; // added
+import 'package:permission_handler/permission_handler.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:wondersl/main.dart';
 
 class AddPlacesPage extends StatelessWidget {
   const AddPlacesPage({Key? key}) : super(key: key);
@@ -48,6 +55,38 @@ class _DataAndImageInputScreenState extends State<DataAndImageInputScreen> {
         ],
       ),
     );
+  }
+
+// final FirebaseStorage _storage = FirebaseStorage.instance;
+// final ImagePicker _imagePicker = ImagePicker();
+
+// Future<String?> uploadImage() async {
+//    final image = await _imagePicker.getImage(source: ImageSource.gallery);
+
+//   if (image != null) {
+//     final Reference storageRef =
+//         _storage.ref().child('images/${DateTime.now()}.png');
+//     final UploadTask uploadTask = storageRef.putFile(File(image.path));
+//     await uploadTask.whenComplete(() => null);
+
+//     return await storageRef.getDownloadURL();
+//   }
+
+//   return null;
+// }
+
+  Future<void> addPlaceToFirestore(String placeName, String location,
+      String description, String adventures, String imagePath) async {
+    final CollectionReference places =
+        FirebaseFirestore.instance.collection('places');
+
+    await places.add({
+      'placeName': placeName,
+      'location': location,
+      'description': description,
+      'adventures': adventures,
+      'imagePath': imagePath,
+    });
   }
 
   Widget _buildContent() {
@@ -125,11 +164,17 @@ class _DataAndImageInputScreenState extends State<DataAndImageInputScreen> {
           ElevatedButton(
             onPressed: () {
               // Perform actions with the entered data and image
-              print('Place Name: $_placeName');
-              print('Location: $_location');
-              print('Description: $_description');
-              print('Unique Adventures: $_adventures');
-              print('Image Path: $_imagePath');
+
+              addPlaceToFirestore(
+                  _placeName, _location, _description, _adventures, _imagePath);
+              // Reset fields after adding to Firestore
+              _placeNameController.clear();
+              _locationController.clear();
+              _descriptionController.clear();
+              _uniqueAdventuresController.clear();
+              setState(() {
+                _imagePath = '';
+              });
             },
             style: ElevatedButton.styleFrom(
               primary: Color(0xff00BFA5), // Set the background color here

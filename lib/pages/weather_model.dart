@@ -53,7 +53,6 @@
 //     return HourlyCast(time: time, temperature: temperature);
 //   }
 // }
-import 'package:flutter/material.dart';
 
 class WeatherModel {
   WeatherModel({required this.currentWeather, required this.hourly});

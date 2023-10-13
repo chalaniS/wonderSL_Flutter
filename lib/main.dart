@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wondersl/firebase_options.dart';
 import 'package:wondersl/pages/add_places.dart';
-import 'package:wondersl/pages/edit_places.dart';
+import 'package:wondersl/pages/list_view.dart';
+import 'package:wondersl/pages/tourist_details_page.dart';
+import 'package:wondersl/pages/update_places.dart';
 import 'package:wondersl/pages/weather_forecast.dart';
 import 'package:wondersl/pages/weather_model.dart';
 import 'package:wondersl/pages/weather.dart';
-import 'pages/welcome_page.dart.dart';
+import 'package:wondersl/pages/welcome_page.dart.dart';
 import 'package:wondersl/main.dart';
+import 'package:firebase_core/firebase_core.dart'; //new added
 
-void main() {
-  runApp(const MyApp());
+//newly added one
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  //await Firebase.initializeApp();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("Connected to firebase");
+  } catch (e) {
+    print('Firebase initialization error: $e'); // Print the error message
+  }
+  runApp(MyApp());
 }
+//right one
+// void main() {
+//   //WidgetsFlutterBinding.ensureInitialized();
+//   //await Firebase.initializeApp();
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -39,8 +60,17 @@ class MyApp extends StatelessWidget {
       ),
       //home: const WelcomePage(),
       //home: const AddPlacesPage(),
-      //home: const EditPlacePage(initialPlaceName: initialPlaceName, initialLocation: initialLocation, initialDescription: initialDescription, initialAdventure: initialAdventure, initialImagePath: initialImagePath),
+
       //home: const MainWeatherScreen(), // weather UI
+      home: PlacesListScreen(),
+      //home: PlacesListViewPage(),
+      // home: UpdatePlaceScreen(
+      //   placeName: '',
+      //   location: '',
+      //   description: '',
+      //   adventures: '',
+      //   imagePath: '',
+      // ),
     );
   }
 }

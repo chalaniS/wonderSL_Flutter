@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:wondersl/pages/add_places.dart';
 
 import '../widgets/distance.dart';
 
@@ -166,6 +167,12 @@ class TouristDetailsPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddPlacesPage(),
+                  ),
+                );
                 // Handle weather-related functionality here
                 // You can navigate to a weather page or perform any other actions
                 print("Weather button pressed");

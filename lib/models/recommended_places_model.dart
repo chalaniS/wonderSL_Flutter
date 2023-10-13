@@ -1,3 +1,7 @@
+//for recommended places
+//import 'dart:convert';
+//import 'package:http/http.dart' as htpp;
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class RecommendedPlaceModel {
   final String image;
