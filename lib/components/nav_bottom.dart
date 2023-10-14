@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:wondersl/pages/my_tours.dart';
 
 class bottomNavigationBar extends StatelessWidget {
   const bottomNavigationBar({Key? key}) : super(key: key);
@@ -32,6 +33,18 @@ class bottomNavigationBar extends StatelessWidget {
           label: "Profile",
         ),
       ],
+      onTap: (int index) {
+        // Handle item clicks based on their index
+        if (index == 2) {
+          // If the "Bookmark" icon is clicked (index 2), navigate to the MyTours page
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) =>
+                  MyTours(), // Replace with the actual MyTours widget
+            ),
+          );
+        }
+      },
     );
   }
 }

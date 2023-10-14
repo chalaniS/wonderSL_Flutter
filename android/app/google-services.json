@@ -30,6 +30,13 @@
             {
               "client_id": "100508084164-4oieud8ej42qh8jnaqsaacnnf5551jbk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "100508084164-9jhbntk98r84nc2mis7abk8j9qb2p2gu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wondersl"
+              }
             }
           ]
         }

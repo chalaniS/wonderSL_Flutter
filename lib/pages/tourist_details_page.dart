@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:wondersl/pages/adventures_page.dart';
+import 'package:wondersl/pages/vehicle_selection.dart';
 
 import '../widgets/distance.dart';
 
@@ -155,7 +157,14 @@ class TouristDetailsPage extends StatelessWidget {
             const Distance(),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const VehicleSelection(),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 shape: const StadiumBorder(),

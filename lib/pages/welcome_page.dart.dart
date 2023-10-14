@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wondersl/pages/user_preferences.dart';
 
 import 'home_page.dart';
 
@@ -46,7 +47,7 @@ class WelcomePage extends StatelessWidget {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomePage(),
+                            builder: (context) => const UserPreferences(),
                           ),
                         );
                       },
