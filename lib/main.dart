@@ -59,10 +59,10 @@ class MyApp extends StatelessWidget {
         ),
       ),
       //home: const WelcomePage(),
-      //home: const AddPlacesPage(),
+      home: const AddPlacesPage(),
 
       //home: const MainWeatherScreen(), // weather UI
-      home: PlacesListScreen(),
+      //home: PlacesListScreen(),
       //home: PlacesListViewPage(),
       // home: UpdatePlaceScreen(
       //   placeName: '',

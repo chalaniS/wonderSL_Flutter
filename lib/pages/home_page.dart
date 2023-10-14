@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
-
 import '../components/nav_bottom.dart';
 import '../widgets/custom_icon_button.dart';
 import '../widgets/location_card.dart';

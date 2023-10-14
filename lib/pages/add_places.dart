@@ -1,11 +1,7 @@
-import 'dart:io';
+//import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart'; // added
-import 'package:permission_handler/permission_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:wondersl/main.dart';
+import 'list_view.dart';
 
 class AddPlacesPage extends StatelessWidget {
   const AddPlacesPage({Key? key}) : super(key: key);
@@ -87,6 +83,9 @@ class _DataAndImageInputScreenState extends State<DataAndImageInputScreen> {
       'adventures': adventures,
       'imagePath': imagePath,
     });
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => PlacesListScreen()));
   }
 
   Widget _buildContent() {
@@ -189,14 +188,13 @@ class _DataAndImageInputScreenState extends State<DataAndImageInputScreen> {
   Widget _buildInterfaceName() {
     return Container(
       alignment: Alignment.topCenter,
-      padding:
-          const EdgeInsets.only(top: 55.0), // Adjust the top padding as needed
+      padding: const EdgeInsets.only(top: 55.0),
       child: const Text(
         'Add Places', // Interface name
         style: TextStyle(
-          fontSize: 20.0, // Customize the text size
+          fontSize: 20.0, //text size
           fontWeight: FontWeight.bold,
-          color: Color(0xff00BFA5), // Customize the text weight
+          color: Color(0xff00BFA5),
         ),
       ),
     );
